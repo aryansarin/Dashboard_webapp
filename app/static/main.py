@@ -12,7 +12,7 @@ DB = os.path.join(BASE, "..", "data", "analytics.db")
 
 # Build the DB on first boot if the build step didn't run (keeps local dev easy).
 if not os.path.exists(DB):
-    from app.build_db import main as build
+    from app.static.build_db import main as build
     build()
 
 app = FastAPI(title="Burger Town Analytics")
