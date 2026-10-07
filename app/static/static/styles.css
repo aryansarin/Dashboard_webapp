@@ -1,0 +1,26 @@
+:root{--bg:#f6f7fb;--card:#fff;--ink:#1c2230;--mute:#6b7280;--accent:#e4572e;--line:#e5e7eb}
+@media(prefers-color-scheme:dark){:root{--bg:#10131a;--card:#1a1f2b;--ink:#e8ebf2;--mute:#9aa3b2;--line:#2a3140}}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+header{display:flex;align-items:baseline;gap:12px;padding:16px 20px;flex-wrap:wrap}
+h1{margin:0;font-size:1.4rem}.sub{color:var(--mute);font-size:.9rem}
+.filters{display:flex;flex-wrap:wrap;gap:14px 20px;padding:12px 20px;background:var(--card);border-block:1px solid var(--line);align-items:flex-end}
+.f label{display:block;font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;color:var(--mute);margin-bottom:4px}
+.f input[type=date]{padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button,.ghost,.btn{padding:5px 10px;border:1px solid var(--line);border-radius:999px;background:var(--bg);color:var(--ink);cursor:pointer;font-size:.8rem;text-decoration:none}
+.chips button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.actions{display:flex;gap:8px;margin-left:auto}.btn{background:var(--accent);color:#fff;border-color:var(--accent)}
+main{padding:16px 20px;transition:opacity .15s}main.loading{opacity:.55}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px}
+.kpi span{display:block;color:var(--mute);font-size:.75rem}.kpi b{font-size:1.5rem}
+.insights{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:14px 0}
+.insights h3{margin:10px 0 0;font-size:.95rem}.insights li{margin:4px 0;font-size:.9rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.card.wide{grid-column:1/-1}.card h3{margin:0 0 8px;font-size:.95rem}
+.cv{position:relative;height:260px}.wide .cv{height:300px}
+.err{background:#fee2e2;color:#991b1b;padding:10px 20px}
+.skeleton{padding:40px;text-align:center;color:var(--mute)}
+@media(max-width:600px){.grid{grid-template-columns:1fr}.actions{margin-left:0}}

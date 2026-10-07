@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Burger Town Analytics</title>
+<script src="https://cdn.jsdelivr.net/npm/vue@3.4.38/dist/vue.global.prod.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div id="app">
+  <header>
+    <h1>🍔 Burger Town Analytics</h1>
+    <span class="sub">{{ meta ? meta.min_date + ' → ' + meta.max_date : '' }}</span>
+  </header>
+
+  <section class="filters" v-if="meta">
+    <div class="f"><label>From</label><input type="date" v-model="f.start" :min="meta.min_date" :max="meta.max_date"></div>
+    <div class="f"><label>To</label><input type="date" v-model="f.end" :min="meta.min_date" :max="meta.max_date"></div>
+    <div class="f" v-for="d in dims" :key="d.key">
+      <label>{{ d.label }}</label>
+      <div class="chips">
+        <button v-for="o in meta[d.opts]" :key="o" :class="{on: f[d.key].includes(o)}" @click="toggle(d.key, o)">{{ o }}</button>
+      </div>
+    </div>
+    <div class="f">
+      <label>Trend</label>
+      <div class="chips">
+        <button :class="{on: f.grain==='month'}" @click="f.grain='month'">Monthly</button>
+        <button :class="{on: f.grain==='day'}" @click="f.grain='day'">Daily</button>
+      </div>
+    </div>
+    <div class="f actions">
+      <button class="ghost" @click="reset">Reset</button>
+      <a class="btn" :href="exportUrl">⬇ Export CSV</a>
+    </div>
+  </section>
+
+  <div class="err" v-if="error">{{ error }}</div>
+
+  <main :class="{loading}" v-if="data">
+    <section class="kpis">
+      <div class="kpi"><span>Line-item records</span><b>{{ n(data.kpis.records) }}</b></div>
+      <div class="kpi"><span>Orders</span><b>{{ n(data.kpis.orders) }}</b></div>
+      <div class="kpi"><span>Revenue</span><b>₹{{ n(data.kpis.revenue) }}</b></div>
+      <div class="kpi"><span>Avg order value</span><b>₹{{ data.kpis.aov.toLocaleString('en-IN') }}</b></div>
+      <div class="kpi"><span>Units sold</span><b>{{ n(data.kpis.units) }}</b></div>
+      <div class="kpi"><span>Items / order</span><b>{{ data.kpis.items_per_order }}</b></div>
+    </section>
+
+    <section class="insights" v-if="data.insights.length">
+      <h3>✨ Auto insights</h3>
+      <ul><li v-for="i in data.insights" :key="i">{{ i }}</li></ul>
+    </section>
+
+    <section class="grid">
+      <div class="card wide"><h3>Revenue trend</h3><div class="cv"><canvas ref="trend"></canvas></div></div>
+      <div class="card"><h3>Revenue by outlet</h3><div class="cv"><canvas ref="outlet"></canvas></div></div>
+      <div class="card"><h3>Order type split</h3><div class="cv"><canvas ref="type"></canvas></div></div>
+      <div class="card"><h3>Revenue by category</h3><div class="cv"><canvas ref="group"></canvas></div></div>
+      <div class="card"><h3>Orders by hour of day</h3><div class="cv"><canvas ref="hour"></canvas></div></div>
+      <div class="card"><h3>Top 10 items (revenue)</h3><div class="cv"><canvas ref="items"></canvas></div></div>
+      <div class="card"><h3>Payment / channel</h3><div class="cv"><canvas ref="settle"></canvas></div></div>
+    </section>
+  </main>
+  <div class="skeleton" v-else-if="!error">Loading dashboard…</div>
+</div>
+<script src="/static/app.js"></script>
+</body>
+</html>

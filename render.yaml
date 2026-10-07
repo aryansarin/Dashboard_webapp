@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: burger-town-analytics
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt && python -m app.build_db
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /healthz
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
