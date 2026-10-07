@@ -1,9 +1,10 @@
 """ETL: lines.csv.gz -> SQLite (analytics.db). Runs at deploy/build time (~5-10s)."""
 import csv, gzip, sqlite3, os, time
 
-HERE = os.path.dirname(__file__)
-SRC = os.path.join(HERE, "..", "data", "lines.csv.gz")
-DB = os.path.join(HERE, "..", "data", "analytics.db")
+HERE = os.path.dirname(os.path.abspath(__file__))
+# Go up TWO steps: out of static, then out of app
+SRC = os.path.join(HERE, "..", "..", "data", "lines.csv.gz")
+DB = os.path.join(HERE, "..", "..", "data", "analytics.db")
 
 SCHEMA = """
 CREATE TABLE lines (
