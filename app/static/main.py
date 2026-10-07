@@ -3,7 +3,7 @@ from functools import lru_cache
 from typing import List, Optional
 
 from fastapi import FastAPI, Query
-from fastapi.middleware.gzip import GZipMiddleware
+from starlette.middleware.gzip import GZipMiddleware
 from fastapi.responses import FileResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 
